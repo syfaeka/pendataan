@@ -21,17 +21,27 @@ class DataPekerja extends BaseController
         $this->pekerjaModel = new DataPekerjaModel();
     }
 
+
     public function index()
     {
-        // Fetch data with joins for human-readable master data
         $data['pekerja'] = $this->pekerjaModel
-            ->select('data_pekerja.*, 
-                      status_kepegawaian.name as status_name, 
-                      jenis_tenaga_ahli.name as ahli_name,
-                      kota_kabupaten.name as kota_name')
-            ->join('status_kepegawaian', 'status_kepegawaian.id = data_pekerja.id_status_kepegawaian', 'left')
-            ->join('jenis_tenaga_ahli', 'jenis_tenaga_ahli.id = data_pekerja.id_jenis_tenaga_ahli', 'left')
-            ->join('kota_kabupaten', 'kota_kabupaten.id = data_pekerja.id_kota', 'left')
+            ->select('data_pekerja.*,
+                      sk.name  as status_name,
+                      jta.name as ahli_name,
+                      kw.name  as kewarganegaraan_name,
+                      nl.name  as negara_name,
+                      kl.name  as kota_lahir_name,
+                      prov.name as provinsi_name,
+                      kot.name  as kota_name,
+                      pa.name   as pendidikan_name')
+            ->join('status_kepegawaian sk',  'sk.id   = data_pekerja.id_status_kepegawaian', 'left')
+            ->join('jenis_tenaga_ahli jta',  'jta.id  = data_pekerja.id_jenis_tenaga_ahli',  'left')
+            ->join('kewarganegaraan kw',     'kw.id   = data_pekerja.id_kewarganegaraan',    'left')
+            ->join('negara nl',              'nl.id   = data_pekerja.id_negara_lahir',        'left')
+            ->join('kota_kabupaten kl',      'kl.id   = data_pekerja.id_kota_lahir',          'left')
+            ->join('provinsi prov',          'prov.id = data_pekerja.id_provinsi',            'left')
+            ->join('kota_kabupaten kot',     'kot.id  = data_pekerja.id_kota',                'left')
+            ->join('pendidikan_akhir pa',    'pa.id   = data_pekerja.id_pendidikan_akhir',    'left')
             ->findAll();
 
         return view('pekerja/index', $data);
@@ -97,11 +107,11 @@ class DataPekerja extends BaseController
         return redirect()->to(base_url('datapekerja'))->with('success', 'Data Pekerja berhasil dihapus.');
     }
 
-        public function new()
-{
-    helper('form');   
-    return view('pekerja/form');
-}
+    public function new()
+    {
+        helper('form');
+        return view('pekerja/form');
+    }
 
 
     /**
@@ -111,12 +121,12 @@ class DataPekerja extends BaseController
     {
         return [
             'status_pegawai' => (new StatusKepegawaianModel())->findAll(),
-            'jenis_ahli'     => (new JenisTenagaAhliModel())->findAll(),
-            'warga_negara'   => (new KewarganegaraanModel())->findAll(),
-            'negara'         => (new NegaraModel())->findAll(),
-            'provinsi'       => (new ProvinsiModel())->findAll(),
-            'kota'           => (new KotaKabupatenModel())->findAll(),
-            'pendidikan'     => (new PendidikanAkhirModel())->findAll(),
+            'jenis_ahli' => (new JenisTenagaAhliModel())->findAll(),
+            'warga_negara' => (new KewarganegaraanModel())->findAll(),
+            'negara' => (new NegaraModel())->findAll(),
+            'provinsi' => (new ProvinsiModel())->findAll(),
+            'kota' => (new KotaKabupatenModel())->findAll(),
+            'pendidikan' => (new PendidikanAkhirModel())->findAll(),
         ];
     }
 }
