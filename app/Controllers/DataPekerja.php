@@ -97,6 +97,13 @@ class DataPekerja extends BaseController
         return redirect()->to(base_url('datapekerja'))->with('success', 'Data Pekerja berhasil dihapus.');
     }
 
+        public function new()
+{
+    helper('form');   
+    return view('pekerja/form');
+}
+
+
     /**
      * Helper to load all master data for the form dropdowns
      */

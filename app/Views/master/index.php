@@ -21,31 +21,26 @@
                         <th width="25%" class="text-center">Aksi</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <?php if (empty($data)) : ?>
-                        <tr>
-                            <td colspan="3" class="text-center text-muted">Belum ada data.</td>
-                        </tr>
-                    <?php else : ?>
-                        <?php $no = 1; foreach ($data as $row) : ?>
-                            <tr>
-                                <td><?= $no++ ?></td>
-                                <td><?= esc($row['name']) ?></td>
-                                <td class="text-center">
-                                    <button class="btn btn-sm btn-warning me-1" 
-                                            onclick="openEditModal(<?= $row['id'] ?>, '<?= esc(addslashes($row['name'])) ?>')">
-                                        <i class="bi bi-pencil-square"></i> Edit
-                                    </button>
-                                    <a href="<?= base_url('master/' . $table . '/' . $row['id'] . '/delete') ?>" 
-                                       class="btn btn-sm btn-danger"
-                                       onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?');">
-                                        <i class="bi bi-trash"></i> Hapus
-                                    </a>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-                    <?php endif; ?>
-                </tbody>
+                    <tbody>
+                    <?php $no = 1; foreach ($data as $row) : ?>
+                    <tr>
+                        <td><?= $no++ ?></td>
+                        <td><?= esc($row['name']) ?></td>
+                        <td class="text-center">
+                            <button class="btn btn-sm btn-warning me-1"
+                                onclick="openEditModal(<?= $row['id'] ?>, '<?= esc(addslashes($row['name'])) ?>')">
+                                Edit
+                            </button>
+
+                            <a href="<?= base_url('master/' . $table . '/' . $row['id'] . '/delete') ?>"
+                                class="btn btn-sm btn-danger"
+                                onclick="return confirm('Yakin hapus?')">
+                                Hapus
+                            </a>
+                        </td>
+                    </tr>
+                    <?php endforeach; ?>
+                    </tbody>
             </table>
         </div>
     </div>

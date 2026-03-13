@@ -23,32 +23,27 @@
                         <th class="text-center">Aksi</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <?php if (empty($pengalaman)) : ?>
-                        <tr>
-                            <td colspan="5" class="text-center text-muted">Belum ada data pengalaman.</td>
-                        </tr>
-                    <?php else : ?>
-                        <?php $no = 1; foreach ($pengalaman as $row) : ?>
-                            <tr>
-                                <td><?= $no++ ?></td>
-                                <td><?= esc($row['nama_kontrak']) ?></td>
-                                <td><?= esc($row['nomor_kontrak']) ?></td>
-                                <td><?= number_format($row['nilai_kontrak'], 0, ',', '.') ?></td>
-                                <td class="text-center">
-                                    <a href="<?= base_url('pengalaman/' . $row['id'] . '/edit') ?>" class="btn btn-sm btn-warning">
-                                        <i class="bi bi-pencil-square"></i> Edit
-                                    </a>
-                                    <a href="<?= base_url('pengalaman/' . $row['id'] . '/delete') ?>" 
-                                       class="btn btn-sm btn-danger"
-                                       onclick="return confirm('Hapus data pengalaman ini?');">
-                                        <i class="bi bi-trash"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-                    <?php endif; ?>
-                </tbody>
+                    <tbody>
+                    <?php $no = 1; foreach ($pengalaman as $row) : ?>
+                    <tr>
+                        <td><?= $no++ ?></td>
+                        <td><?= esc($row['nama_kontrak']) ?></td>
+                        <td><?= esc($row['nomor_kontrak']) ?></td>
+                        <td><?= number_format($row['nilai_kontrak'], 0, ',', '.') ?></td>
+                        <td class="text-center">
+                            <a href="<?= base_url('pengalaman/' . $row['id'] . '/edit') ?>" class="btn btn-sm btn-warning">
+                                Edit
+                            </a>
+
+                            <a href="<?= base_url('pengalaman/' . $row['id'] . '/delete') ?>"
+                            class="btn btn-sm btn-danger"
+                            onclick="return confirm('Hapus data pengalaman ini?');">
+                                Hapus
+                            </a>
+                        </td>
+                    </tr>
+                    <?php endforeach; ?>
+                    </tbody>
             </table>
         </div>
     </div>
